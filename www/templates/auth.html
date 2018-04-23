@@ -1,0 +1,33 @@
+ <ion-view view-title="Login" hide-nav-bar="true" hide-back-button="true" class="ion-auth pane ionview-with-patbg">
+    <ion-content class="padding" has-header="false" has-bouncing="false">
+        <p><br/>
+    <img src="img/logo.png" class="full"> </p><br/><br/>
+      <h4 class="text-center">Acesse com seu numero de telefone já cadastrado em <a href="http://www.helloradio.com.br">helloradio.com.br</a></h4>
+     <br/><br/>
+    <form name="myForm" novalidate>
+  
+    <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Telefone:</span>
+          <input type="text" name="telefone" ng-model="user.telefone" required ng-mask="(999)999-9999">
+        </label>
+        
+      
+  	</div>
+    <div class="padding errors">
+        <p ng-show="myForm.username.$error.required">* Telefone é obrigatório</p>
+    </div>
+         
+    <div class="padding">
+        <button class="button button-block button-calm" ng-disabled="myForm.$invalid" ng-click="login(user)">Acessar</button>
+    	<!-- <p class="text-center">
+      	<a href="#/forgot-password">Forgot password</a>
+    	</p> -->
+    </div>
+         <p  class="padding text-center"> <br/>
+           <small>Ao utilizar esse aplicativo você declara estar de acordo com os <a href="#">termos e condições de uso</a></small>
+        </p>
+    </form>
+     
+  </ion-content>
+</ion-view>

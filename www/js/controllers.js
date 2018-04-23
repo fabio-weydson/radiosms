@@ -1,38 +1,77 @@
 angular.module('starter.controllers', [])
 
-.controller('WelcomeCtrl', function($scope) {
- 
-        $scope.showSkip = true;
-        $scope.dir = 'ltr';
-        $scope.slideList = [
-            {
-                title: "What is <strong>Food</strong>Ionic?",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque maximus, dui accumsan cursus lacinia, nisl risus.",
-                image: "assets/img/foodIonic-ico.png",
-            },
-            {
-                title: "Why FoodIonic?",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque maximus, dui accumsan cursus lacinia, nisl risus.",
-                image: "assets/img/foodIonic-ico.png",
-            },
-            {
-                title: "Your delicious dish is coming!",
-                description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque maximus, dui accumsan cursus lacinia, nisl risus.",
-                image: "assets/img/foodIonic-ico.png",
+.controller('WelcomeCtrl', ['$sce', '$scope', function($sce,$scope) {
+  $scope.slideDetails = [{
+    title: 'Bem vindo à <b>Hello Radio</b>',
+    buttonText: 'Próximo',
+    image: 'img/screen/screen-1.png'
+  },
+  {
+    title: 'A solução mais completa para sua rádio',
+    buttonText: 'Próximo',
+    image: 'img/screen/screen-2.png'
+  },
+  {
+    title: 'Crie promoções onde seus ouvintes possam interar',
+    buttonText: 'Próximo',
+    image: 'img/screen/screen-3.png'
+  },
+ {
+    title: 'Está pronto?',
+    buttonText: 'Próximo',
+    image: 'img/screen/screen-4.png',
+    htmls: $sce.trustAsHtml(' <a class="button  button-calm" href="#/auth">'+
+                    'Acessar o sistema SMS'+
+                '</a>'+
+                '<a class="button button-dark" href="http://www.helloradio.com.br" target="_blank">'+
+                    'Ainda não sou cliente'+
+                '</a>')
+  }];
+
+  $scope.slide = {
+    current: 0,
+    total: $scope.slideDetails.length,
+    pagerClick: function (index) {
+      $ionicSlideBoxDelegate.slide(index, 250);
+    },
+    slideChanged: function (index){
+      $scope.slide.current = index;
+    }
+  };
+
+  $scope.wkButton = function () {
+    var lastslide = $scope.slide.total - 1;
+    if ($scope.slide.current === lastslide) {
+      localStorage.setItem('appFirstRun', 'true');
+      $state.go('app.addUser');
+    }else {
+      $ionicSlideBoxDelegate.next();
+    }
+  };
+
+	// button events
+	$scope.$on('$ionicView.enter', function(){
+	  $scope.slide.current = 0;
+	});
+
+}])
+.controller('AuthCtrl', function($scope,$state,$http) {
+    $scope.user = {};
+    $scope.login = function(user){
+        console.log(user)
+        
+        $http.post('http://www.helloradio.com.br/api/auth', { telefone: user.telefone})
+            .success(function (response) {
+            console.log(response);
+            if(response.status==true) {
+                $state.go('/dash');
+            } else if(response.status==false) {
+                $state.go('tab.dash');
             }
-        ];
-    
-    $scope.onSlideNext = function () {
-        $scope.slides.slideNext(300);
-    };
-    $scope.onSlidePrev = function () {
-        $scope.slides.slidePrev(300);
-    };
-    $scope.onLastSlide = function () {
-        $scope.slides.slideTo(3, 300);
-    };
-
-
+        }).error(function(response) {
+             $state.go('tab.dash');
+        });
+    }
 })
 
 .controller('DashCtrl', function($scope) {})

@@ -1,1 +1,7 @@
-/* Empty. Add your own CSS if you like */
+
+.ion-walkthrough .slide-image {
+    width: 100%;
+}
+.ion-walkthrough .walkthrough-html {
+    line-height: 70px;
+}

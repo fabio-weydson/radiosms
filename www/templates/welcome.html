@@ -1,38 +1,19 @@
- <ion-view view-title="Welcome" hide-nav-bar="true" hide-back-button="true" >
+ <ion-view view-title="Welcome" hide-nav-bar="true" hide-back-button="true" class="ion-walkthrough pane">
   <ion-content class="padding">
-      <ion-slides pager="true" dir="{{dir}}">
-			    <ion-slide ng-repeat="slide in slideList">
-			      <ion-toolbar fixed>
-			        <ion-buttons end>
-			          <button ion-button color="light" (click)="onLastSlide()">Skip</button>
-			        </ion-buttons>
-			      </ion-toolbar>
-			      <img ng-src="slide.image" class="slide-image">
-			      <h2 class="slide-title text-white" ng-bind-html="slide.title"></h2>
-			      <p ng-bind-html="slide.description" class="text-white"></p>
-
-						<div padding>
-				      <button ion-button round block color="secondary" margin-top icon-end ng-click="onSlideNext()">
-				      	Next
-				      	<ion-icon name="arrow-round-forward" color="light"></ion-icon>
-				    	</button>
-			    	</div>
+      <div  class="walkthrough-title-slider">
+    		<h1 class="walkthrough-title" ng-bind-html="slideDetails[slide.current].title"></h1>
+    	</div>
+      <div class="mobile-frame">
+      <ion-slide-box pager="true" dir="{{dir}}" on-slide-changed = "slide.slideChanged(index)"
+    			class = "screen-slider"
+    			pager-click = "slide.pagerClick(index)"
+    			delegate-handle = "slide-handle">
+			    <ion-slide ng-repeat="slide in slideDetails">
+			      <img ng-src="{{slide.image}}" >
+                    <div ng-if="slide.htmls" class="walkthrough-html text-center" ng-bind-html="slide.htmls"></div>
 			    </ion-slide>
-			    <ion-slide>
-			      <ion-toolbar>
-			      </ion-toolbar>
-			      <img src="assets/img/foodIonic-ico.png" class="slide-image" margin-top>
-			      <h2 class="slide-title text-white">Ready to Lunch?</h2>
-
-			      <div padding>
-			        <button ion-button block round color="secondary" margin-top (click)="openAuthPage()">
-			          Sign In / Sign Up
-			        </button>
-			        <button ion-button block round color="dark" margin-top (click)="openHomePage()">
-			          Get Started
-			        </button>
-			      </div>
-			    </ion-slide>
-			  </ion-slides>
+                     
+			  </ion-slide-box>
+          </div>
   </ion-content>
 </ion-view>
