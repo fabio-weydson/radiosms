@@ -13,8 +13,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
      // we will restore the intercepted SMS here, for later restore
      var smsList = [];
      var interceptEnabled = false;
+     
      function initApp() {
-       if (! SMS ) { alert( 'SMS plugin not ready' ); return; }
+       
+       if (! SMS ) { alert( 'SMS plugin not ready' ); return; } else {
+        alert( 'SMS ready' ); return; 
+       }
        
          document.addEventListener('onSMSArrive', function(e){
            var data = e.data;

@@ -74,22 +74,28 @@ angular.module('starter.controllers', [])
           })
             .success(function (response) {
             console.log(response);
-            if(response.result=='true') {
+            if(response.result==true) {
               console.log(response);
                 $scope.message_error = "";
-                localStorage.setItem('empresa', response.data);
+                localStorage.setItem('empresa', JSON.stringify(response.data));
                 $state.go('tab.dash');
-            } else if(response.result=='false') {
+            } else if(response.result==false) {
                 $scope.message_error = response.msg;
             }
         }).error(function(response) {
-             $scope.message_error = 'Falha na comunicação com o servidor.'
-             //$scope.message_error = response.msg;
+             //$scope.message_error = 'Falha na comunicação com o servidor.'
+             $scope.message_error = response.msg;
         });
     }
 })
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope, Empresa, SMSservice, $interval) {
+  $scope.Empresa = Empresa.info();
+  console.log($scope.Empresa);
+  $interval(function(){
+  console.log(SMSservice.check());
+  },2000);
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

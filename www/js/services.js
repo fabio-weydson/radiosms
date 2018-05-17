@@ -1,5 +1,29 @@
 angular.module('starter.services', [])
+.factory('SMSservice', ['$interval', function($interval){
 
+  if(SMS) SMS.startWatch(function(){
+    $scope.msg = 'watching started';
+  }, function(){
+    $scope.msg = 'failed to start watching';
+  });
+
+  return {
+    check: function(){
+        return 'sadsadads';
+    }
+  };
+}])
+.factory('Empresa', function(){
+  var empresa_data = JSON.parse(localStorage.getItem('empresa'));
+  return {
+    info: function() {
+      return empresa_data;
+    },
+    logout: function(chat) {
+      localStorage.setItem('empresa',"");
+    }
+  };
+})
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
