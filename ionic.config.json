@@ -1,6 +1,7 @@
 {
   "name": "ionic-slate",
   "app_id": "",
+  "type": "ionic-angular",
   "gulpStartupTasks": [
     "sass",
     "watch"
@@ -8,5 +9,6 @@
   "watchPatterns": [
     "www/**/*",
     "!www/lib/**/*"
-  ]
+  ],
+  "integrations": {}
 }

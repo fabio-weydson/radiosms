@@ -9,6 +9,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
+    document.addEventListener('deviceready', initApp, false);
+     // we will restore the intercepted SMS here, for later restore
+     var smsList = [];
+     var interceptEnabled = false;
+     function initApp() {
+       if (! SMS ) { alert( 'SMS plugin not ready' ); return; }
+       
+         document.addEventListener('onSMSArrive', function(e){
+           var data = e.data;
+           smsList.push( data );
+           
+           alert('SMS arrived, count: ' + smsList.length );
+           
+           var divdata = $('div#data');
+           divdata.html( divdata.html() + JSON.stringify( data ) );
+           
+         });
+     }
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {

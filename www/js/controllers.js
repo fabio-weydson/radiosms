@@ -2,7 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('WelcomeCtrl', ['$sce', '$scope', function($sce,$scope) {
   $scope.slideDetails = [{
-    title: 'Bem vindo à <b>Hello Radio</b>',
+    title: 'Bem vindo à <br><b>Hello Radio</b>',
     buttonText: 'Próximo',
     image: 'img/screen/screen-1.png'
   },
@@ -17,7 +17,7 @@ angular.module('starter.controllers', [])
     image: 'img/screen/screen-3.png'
   },
  {
-    title: 'Está pronto?',
+    title: 'Tudo pronto?',
     buttonText: 'Próximo',
     image: 'img/screen/screen-4.png',
     htmls: $sce.trustAsHtml(' <a class="button  button-calm" href="#/auth">'+
@@ -55,21 +55,36 @@ angular.module('starter.controllers', [])
 	});
 
 }])
-.controller('AuthCtrl', function($scope,$state,$http) {
+.controller('AuthCtrl', function($scope,$state,$http, $httpParamSerializerJQLike) {
     $scope.user = {};
+    $scope.message_error = "";
     $scope.login = function(user){
+     
         console.log(user)
         
-        $http.post('http://www.helloradio.com.br/api/auth', { telefone: user.telefone})
+        $http({ 
+            url: 'https://hello.radio.midia9.online/api/autenticar', 
+            method: 'POST', 
+            dataType:"json",
+            data: $httpParamSerializerJQLike($scope.user), 
+         
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
             .success(function (response) {
             console.log(response);
-            if(response.status==true) {
-                $state.go('/dash');
-            } else if(response.status==false) {
+            if(response.result=='true') {
+              console.log(response);
+                $scope.message_error = "";
+                localStorage.setItem('empresa', response.data);
                 $state.go('tab.dash');
+            } else if(response.result=='false') {
+                $scope.message_error = response.msg;
             }
         }).error(function(response) {
-             $state.go('tab.dash');
+             $scope.message_error = 'Falha na comunicação com o servidor.'
+             //$scope.message_error = response.msg;
         });
     }
 })
