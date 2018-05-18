@@ -24,8 +24,8 @@ xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
-  
-<gap:plugin name="cordova-plugin-sms" source="npm" />
+    <gap:plugin name="cordova-plugin-background-mode" source="npm"/>
+    <gap:plugin name="cordova-plugin-sms" source="npm" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

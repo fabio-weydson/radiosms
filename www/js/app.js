@@ -13,7 +13,31 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
      // we will restore the intercepted SMS here, for later restore
      var smsList = [];
      var interceptEnabled = false;
-     
+     $scope.BackgroundMode = function(){
+
+        e.preventDefault();
+
+    }
+    cordova.plugins.backgroundMode.setDefaults({  title:  $scope.radioOptions.Titulo, ticker: 'Entrando em segundo plano',  text:'Clique para abrir o aplicativo.'});
+            cordova.plugins.backgroundMode.enable();
+            cordova.plugins.backgroundMode.onactivate = function () {
+                setTimeout(function () {
+                    // Modify the currently displayed notification
+                    if($scope.radioOptions.songTitle) {
+                       var texto = $scope.radioOptions.songTitle;
+                    } else {
+                       var texto = 'Clique para abrir o aplicativo.';
+                    }
+                    cordova.plugins.backgroundMode.configure({
+                        title:  $scope.radioOptions.Titulo,
+                        text: texto
+
+                    });
+                }, 5000);
+            }
+                  
+       document.addEventListener("backbutton", $scope.BackgroundMode, true); 
+
      function initApp() {
        
        if (! SMS ) { alert( 'SMS plugin not ready' ); return; } else {
