@@ -60,7 +60,7 @@ angular.module('starter.controllers', [])
     $scope.message_error = "";
     $scope.login = function(user){
      
-        console.log(user)
+        alert(user.telefone)
         
         $http({ 
             url: 'https://hello.radio.midia9.online/api/autenticar', 
