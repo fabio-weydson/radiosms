@@ -24,6 +24,18 @@ xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
+      <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
+    <gap:plugin name="cordova-plugin-device" source="npm"/> 
+    <gap:plugin name="cordova-plugin-file" source="npm" /> 
+    <gap:plugin name="cordova-plugin-x-toast" source="npm" /> 
+    <gap:plugin name="cordova-plugin-dialogs" source="npm" />
+    <gap:plugin name="cordova-plugin-globalization" source="npm" />
+    <gap:plugin name="cordova-plugin-media" source="npm" />
+    <gap:plugin name="cordova-plugin-inappbrowser" source="npm" /> 
+    <gap:plugin name="cordova-plugin-network-information" source="npm" /> 
+    <gap:plugin name="cordova-plugin-splashscreen" source="npm"  /> 
+    <gap:plugin name="cordova-plugin-disable-ios11-statusbar" source="npm" />
+    <gap:plugin name="cordova-plugin-statusbar" source="npm"  />
     <gap:plugin name="cordova-plugin-background-mode" source="npm"/>
     <gap:plugin name="cordova-plugin-sms" source="npm" />
     <access origin="*" />
