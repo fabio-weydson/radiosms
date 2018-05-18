@@ -73,7 +73,7 @@ angular.module('starter.controllers', [])
             }
           })
             .success(function (response) {
-            console.log(response);
+            alert(response.msg);
             if(response.result==true) {
               console.log(response);
                 $scope.message_error = "";
