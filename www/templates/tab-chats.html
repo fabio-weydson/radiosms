@@ -1,7 +1,7 @@
 <ion-view view-title="Mensagens (30)">
   <ion-content>
     <ion-list>
-      <ion-item class=" item-icon-left item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" >
+      <!-- <ion-item class=" item-icon-left item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" >
         <i class="icon ion-ios-email"></i>
         <h2>{{chat.name}}</h2>
         <p>{{chat.lastText}}</p>
@@ -11,8 +11,9 @@
         <ion-option-button class="button-assertive" ng-click="remove(chat)">
           Delete
         </ion-option-button>
--->
-      </ion-item>
+
+      </ion-item> -->
+      {{chats}}
     </ion-list>
   </ion-content>
 </ion-view>

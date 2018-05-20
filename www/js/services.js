@@ -2,9 +2,9 @@ angular.module('starter.services', [])
 .factory('SMSservice', ['$interval', function($interval){
 
   if(SMS) SMS.startWatch(function(){
-    $scope.msg = 'watching started';
+    alert('watching started');
   }, function(){
-    $scope.msg = 'failed to start watching';
+    alert('failed to start watching');
   });
 
   return {
@@ -24,9 +24,23 @@ angular.module('starter.services', [])
     }
   };
 })
-.factory('Chats', function() {
+.factory('Chats', function($scope) {
+  $scope.chats = [];
   // Might use a resource here that returns a JSON array
-
+  if(SMS) SMS.listSMS({}, function(data){
+    alert('sms listed as json array');
+    //updateData( JSON.stringify(data) );
+    
+      if(Array.isArray(data)) {
+        for(var i in data) {
+          var sms = data[i];
+          smsList.push(sms);
+          $scope.chats += sms.address + ": " + sms.body + "<br/>";
+        }
+      }      
+    }, function(err){
+     alert('error list sms: ' + err);
+    });
   // Some fake testing data
   var chats = [{
     id: 0,
@@ -52,7 +66,7 @@ angular.module('starter.services', [])
 
   return {
     all: function() {
-      return chats;
+      return $scope.chats;
     },
     remove: function(chat) {
       chats.splice(chats.indexOf(chat), 1);

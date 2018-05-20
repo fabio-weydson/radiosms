@@ -10,31 +10,52 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     document.addEventListener('deviceready', initApp, false);
-    document.addEventListener('onSMSArrive', function(e) {
-      alert('onSMSArrive()');
-      var IncomingSMS = e.data;
-      alert('sms.address:' + IncomingSMS.address);
-      alert('sms.body:' + IncomingSMS.body);
-      /* Debug received SMS content (JSON) */
-      alert(JSON.stringify(IncomingSMS));
-    });
-     // we will restore the intercepted SMS here, for later restore
-     var smsList = [];
-     var interceptEnabled = false;
-     function BackgroundMode(){
-
-        e.preventDefault();
-
-    }
+   
+    
     cordova.plugins.backgroundMode.setDefaults({  title:  'Em modo background', ticker: 'Entrando em segundo plano',  text:'Clique para abrir o aplicativo.'});
-            cordova.plugins.backgroundMode.enable();
-            cordova.plugins.backgroundMode.onactivate = function () {
+    cordova.plugins.backgroundMode.enable();
+    cordova.plugins.backgroundMode.onactivate = function () {
               alert('entrando em bg')
-            }
+    }
                   
     document.addEventListener("backbutton",BackgroundMode(), true); 
 
      function initApp() {
+
+      var permissions = cordova.plugins.permissions;
+      permissions.hasPermission(permissions.READ_SMS, checkPermissionCallback, null);
+  
+       function checkPermissionCallback(status) {
+           if(!status.hasPermission) {
+               var errorCallback = function() {
+                   console.warn('SMS permission is not turned on');
+               }
+  
+               permissions.requestPermission(
+                   permissions.READ_SMS,
+                   function(status) {
+                       if(!status.hasPermission) errorCallback();
+                   },
+                   errorCallback);
+           }
+       }
+
+       document.addEventListener('onSMSArrive', function(e) {
+        alert('onSMSArrive()');
+        var IncomingSMS = e.data;
+        alert('sms.address:' + IncomingSMS.address);
+        alert('sms.body:' + IncomingSMS.body);
+        /* Debug received SMS content (JSON) */
+        alert(JSON.stringify(IncomingSMS));
+      });
+       // we will restore the intercepted SMS here, for later restore
+       var smsList = [];
+       var interceptEnabled = false;
+       function BackgroundMode(){
+  
+          e.preventDefault();
+  
+      }
        
        if (! SMS ) { alert( 'SMS plugin not ready' ); return; } else {
         alert( 'SMS ready' ); return; 
