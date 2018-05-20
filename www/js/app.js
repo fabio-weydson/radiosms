@@ -25,6 +25,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       var permissions = cordova.plugins.permissions;
       permissions.hasPermission(permissions.READ_SMS, checkPermissionCallback, null);
   
+
+      window.plugins.sim.getSimInfo(successCallBack, errorCallback);
+      function successCallBack(result){
+        var resultado = JSON.stringify(result);
+        alert(resultado) 
+      }
+      function errorCallback(result){
+        alert('nao deu') 
+      }
+      
        function checkPermissionCallback(status) {
            if(!status.hasPermission) {
                var errorCallback = function() {

@@ -56,13 +56,7 @@ angular.module('starter.controllers', [])
 
 }])
 .controller('AuthCtrl', function($scope,$state,$http, $httpParamSerializerJQLike) {
-    window.plugins.sim.getSimInfo(successCallBack, errorCallback);
-    function successCallBack(result){
-      alert(result.phoneNumber) 
-    }
-    function errorCallback(result){
-      alert('nao deu') 
-    }
+  
     $scope.user = {};
     $scope.message_error = "";
     $scope.login = function(user){
