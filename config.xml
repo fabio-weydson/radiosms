@@ -38,6 +38,7 @@ xmlns:gap="http://phonegap.com/ns/1.0">
     <gap:plugin name="cordova-plugin-disable-ios11-statusbar" source="npm" />
     <gap:plugin name="cordova-plugin-statusbar" source="npm"  />
     <gap:plugin name="cordova-plugin-background-mode" source="npm"/>
+    <gap:plugin name="cordova-plugin-sim" source="npm" />
     <gap:plugin name="cordova-plugin-android-permissions" source="npm" />
     <gap:plugin name="cordova-plugin-sms" source="npm" />
  
