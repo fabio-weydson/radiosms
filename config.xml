@@ -40,8 +40,10 @@ xmlns:gap="http://phonegap.com/ns/1.0">
     <gap:plugin name="cordova-plugin-background-mode" source="npm"/>
     <gap:plugin name="cordova-plugin-sms" source="npm" />
 
-    <config-file platform="android"  target="AndroidManifest.xml" parent="/*">
-      <uses-permission android:name="android.permission.READ_CONTACTS" />
+   <config-file target="AndroidManifest.xml" parent="/*">
+        <uses-permission android:name="android.permission.READ_CONTACTS" />
+        <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+        <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     </config-file>
 
 
