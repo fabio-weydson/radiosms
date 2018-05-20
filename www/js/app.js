@@ -29,6 +29,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     cordova.plugins.backgroundMode.setDefaults({  title:  'Em modo background', ticker: 'Entrando em segundo plano',  text:'Clique para abrir o aplicativo.'});
             cordova.plugins.backgroundMode.enable();
             cordova.plugins.backgroundMode.onactivate = function () {
+              alert('entrando em bg')
             }
                   
     document.addEventListener("backbutton",BackgroundMode(), true); 
