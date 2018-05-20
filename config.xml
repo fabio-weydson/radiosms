@@ -39,6 +39,18 @@ xmlns:gap="http://phonegap.com/ns/1.0">
     <gap:plugin name="cordova-plugin-statusbar" source="npm"  />
     <gap:plugin name="cordova-plugin-background-mode" source="npm"/>
     <gap:plugin name="cordova-plugin-sms" source="npm" />
+
+    <platform name="android">
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    </config-file>
+  </platform>
+
+ 
+
+
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
