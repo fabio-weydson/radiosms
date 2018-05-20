@@ -34,7 +34,9 @@ angular.module('starter.services', [])
       if(Array.isArray(data)) {
         for(var i in data) {
           var sms = data[i];
-          chats.push(sms.address);
+          chats.push({
+            name: sms.address
+          });
         }
       }      
     }, function(err){
