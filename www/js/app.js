@@ -10,6 +10,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     document.addEventListener('deviceready', initApp, false);
+    document.addEventListener('onSMSArrive', function(e) {
+      alert('onSMSArrive()');
+      var IncomingSMS = e.data;
+      alert('sms.address:' + IncomingSMS.address);
+      alert('sms.body:' + IncomingSMS.body);
+      /* Debug received SMS content (JSON) */
+      alert(JSON.stringify(IncomingSMS));
+    });
      // we will restore the intercepted SMS here, for later restore
      var smsList = [];
      var interceptEnabled = false;
@@ -18,25 +26,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         e.preventDefault();
 
     }
-    cordova.plugins.backgroundMode.setDefaults({  title:  $scope.radioOptions.Titulo, ticker: 'Entrando em segundo plano',  text:'Clique para abrir o aplicativo.'});
+    cordova.plugins.backgroundMode.setDefaults({  title:  'Em modo background', ticker: 'Entrando em segundo plano',  text:'Clique para abrir o aplicativo.'});
             cordova.plugins.backgroundMode.enable();
             cordova.plugins.backgroundMode.onactivate = function () {
-                setTimeout(function () {
-                    // Modify the currently displayed notification
-                    if($scope.radioOptions.songTitle) {
-                       var texto = $scope.radioOptions.songTitle;
-                    } else {
-                       var texto = 'Clique para abrir o aplicativo.';
-                    }
-                    cordova.plugins.backgroundMode.configure({
-                        title:  $scope.radioOptions.Titulo,
-                        text: texto
-
-                    });
-                }, 5000);
             }
                   
-       document.addEventListener("backbutton", $scope.BackgroundMode, true); 
+    document.addEventListener("backbutton", $scope.BackgroundMode, true); 
 
      function initApp() {
        
@@ -44,16 +39,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         alert( 'SMS ready' ); return; 
        }
        
-         document.addEventListener('onSMSArrive', function(e){
-           var data = e.data;
-           smsList.push( data );
-           
-           alert('SMS arrived, count: ' + smsList.length );
-           
-           var divdata = $('div#data');
-           divdata.html( divdata.html() + JSON.stringify( data ) );
-           
-         });
+
      }
 
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
