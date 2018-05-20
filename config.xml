@@ -9,7 +9,6 @@ xmlns:gap="http://phonegap.com/ns/1.0">
   <author email="fabioweydson@gmail.com" href="http://example.com.com/">
       Fabio Weydson
     </author>
-        <preference name="permissions"                value="none"/>
 
   <content src="index.html"/>
 <preference name="webviewbounce" value="false" />
