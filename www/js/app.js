@@ -21,7 +21,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
      // we will restore the intercepted SMS here, for later restore
      var smsList = [];
      var interceptEnabled = false;
-     $scope.BackgroundMode = function(){
+     function BackgroundMode(){
 
         e.preventDefault();
 
@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             cordova.plugins.backgroundMode.onactivate = function () {
             }
                   
-    document.addEventListener("backbutton", $scope.BackgroundMode, true); 
+    document.addEventListener("backbutton",BackgroundMode(), true); 
 
      function initApp() {
        
