@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('DashCtrl', function($scope, Empresa) {
+.controller('DashCtrl', function($scope, Chats, Empresa) {
     $scope.Empresa = Empresa.info();
 })
 
@@ -97,10 +97,12 @@ angular.module('starter.controllers', [])
   //
   $scope.$on('$ionicView.enter', function(e) {
     $scope.Totalchats = Chats.allCount();
+    $scope.chats = Chats.refresh();
     $interval(function(){
       alert('atualizar');
+      $scope.chats = Chats.refresh();
       $scope.chats = Chats.all();
-    },5000);
+    },10000);
    
   });
 })

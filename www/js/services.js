@@ -20,7 +20,8 @@ angular.module('starter.services', [])
 .factory('Chats', function() {
   var chats = [];
   // Might use a resource here that returns a JSON array
-  if(SMS) SMS.listSMS({}, function(data){
+  var refresh = function(){
+    if(SMS) SMS.listSMS({}, function(data){
     alert(data.length+' sms listed as json array');
     alert( JSON.stringify(data) );
     var smsList = [];
@@ -32,6 +33,8 @@ angular.module('starter.services', [])
     }, function(err){
      alert('error list sms: ' + err);
     });
+    return false;
+  }
   // Some fake testing data
   // var chats = [{
   //   id: 0,
@@ -56,6 +59,7 @@ angular.module('starter.services', [])
   // }];
 
   return {
+    refresh: refresh,
     all: function() {
       return chats;
     },
