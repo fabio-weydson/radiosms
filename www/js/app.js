@@ -7,15 +7,18 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngSanitize'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$rootScope) {
+ 
   $ionicPlatform.ready(function() {
+    $rootScope.test = new Date();
+    
     document.addEventListener('deviceready', initApp, false);
    
     
     cordova.plugins.backgroundMode.setDefaults({  title:  'Em modo background', ticker: 'Entrando em segundo plano',  text:'Clique para abrir o aplicativo.'});
     cordova.plugins.backgroundMode.enable();
     cordova.plugins.backgroundMode.onactivate = function () {
-              alert('entrando em bg')
+             
     }
                   
     document.addEventListener("backbutton",BackgroundMode(), true); 
@@ -25,20 +28,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       var permissions = cordova.plugins.permissions;
       permissions.hasPermission(permissions.READ_SMS, checkPermissionCallback, null);
   
-
-      window.plugins.sim.getSimInfo(successCallBack, errorCallback);
-      function successCallBack(result){
-        var resultado = JSON.stringify(result);
-        alert(resultado) 
-      }
-      function errorCallback(result){
-        alert('nao deu') 
-      }
-      
+        
        function checkPermissionCallback(status) {
            if(!status.hasPermission) {
                var errorCallback = function() {
-                   console.warn('SMS permission is not turned on');
+                   alert('SMS permission is not turned on');
                }
   
                permissions.requestPermission(
@@ -50,26 +44,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
            }
        }
 
-       document.addEventListener('onSMSArrive', function(e) {
+      document.addEventListener('onSMSArrive', function(e) {
+        var logado = JSON.parse(localStorage.getItem("empresa"));
         alert('onSMSArrive()');
         var IncomingSMS = e.data;
         alert('sms.address:' + IncomingSMS.address);
         alert('sms.body:' + IncomingSMS.body);
         /* Debug received SMS content (JSON) */
         alert(JSON.stringify(IncomingSMS));
+        if(logado.EMP_CodigoEmpresa) {
+          alert("Logado! Fazer o envio");
+        }
       });
        // we will restore the intercepted SMS here, for later restore
-       var smsList = [];
-       var interceptEnabled = false;
-       function BackgroundMode(){
-  
+   
+      function BackgroundMode(e){
           e.preventDefault();
-  
       }
        
-       if (! SMS ) { alert( 'SMS plugin not ready' ); return; } else {
-        alert( 'SMS ready' ); return; 
-       }
+      if (! SMS ) { alert( 'SMS plugin not ready' ); return; } else {
+       return; 
+      }
        
 
      }

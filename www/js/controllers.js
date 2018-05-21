@@ -1,6 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('WelcomeCtrl', ['$sce', '$scope', function($sce,$scope) {
+  
   $scope.slideDetails = [{
     title: 'Bem vindo à <br><b>Hello Radio</b>',
     buttonText: 'Próximo',
@@ -56,10 +57,17 @@ angular.module('starter.controllers', [])
 
 }])
 .controller('AuthCtrl', function($scope,$state,$http, $httpParamSerializerJQLike) {
-  
+    //window.plugins.sim.getSimInfo(successCallBack, errorCallback);
+    function successCallBack(result){
+      var resultado = JSON.stringify(result);
+      alert(resultado) 
+    }
+    function errorCallback(result){
+      return  false;
+    }
     $scope.user = {};
     $scope.message_error = "";
-    $scope.login = function(user){
+    $scope.login = function(user){  
      
         alert(user.telefone)
         
@@ -74,10 +82,8 @@ angular.module('starter.controllers', [])
             }
           })
             .success(function (response) {
-            alert(response.msg);
             if(response.result==true) {
-              console.log(response);
-                $scope.message_error = "";
+                $scope.message_error = false;
                 localStorage.setItem('empresa', JSON.stringify(response.data));
                 $state.go('tab.dash');
             } else if(response.result==false) {
@@ -91,32 +97,21 @@ angular.module('starter.controllers', [])
 })
 
 .controller('DashCtrl', function($scope, Empresa, SMSservice, $interval) {
-  $scope.Empresa = Empresa.info();
-  console.log($scope.Empresa);
-  $interval(function(){
-  console.log(SMSservice.check());
-  },2000);
+    $scope.Empresa = Empresa.info();
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('ChatsCtrl', function($scope, $rootScope, Chats) {
+ 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
   // listen for the $ionicView.enter event:
   //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+  $scope.$on('$ionicView.enter', function(e) {
+    alert($rootScope.test)
+    $scope.chats = Chats.all();
+  });
 })
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
