@@ -40,16 +40,6 @@ angular.module('starter.controllers', [])
     }
   };
 
-  $scope.wkButton = function () {
-    var lastslide = $scope.slide.total - 1;
-    if ($scope.slide.current === lastslide) {
-      localStorage.setItem('appFirstRun', 'true');
-      $state.go('app.addUser');
-    }else {
-      $ionicSlideBoxDelegate.next();
-    }
-  };
-
 	// button events
 	$scope.$on('$ionicView.enter', function(){
 	  $scope.slide.current = 0;
@@ -57,6 +47,7 @@ angular.module('starter.controllers', [])
 
 }])
 .controller('AuthCtrl', function($scope,$state,$http, $httpParamSerializerJQLike) {
+    localStorage.setItem('FirstRun', 'false');
     //window.plugins.sim.getSimInfo(successCallBack, errorCallback);
     function successCallBack(result){
       var resultado = JSON.stringify(result);
@@ -68,9 +59,7 @@ angular.module('starter.controllers', [])
     $scope.user = {};
     $scope.message_error = "";
     $scope.login = function(user){  
-     
-        alert(user.telefone)
-        
+             
         $http({ 
             url: 'https://hello.radio.midia9.online/api/autenticar', 
             method: 'POST', 
@@ -90,7 +79,6 @@ angular.module('starter.controllers', [])
                 $scope.message_error = response.msg;
             }
         }).error(function(response) {
-             //$scope.message_error = 'Falha na comunicação com o servidor.'
              $scope.message_error = response.msg;
         });
     }
@@ -100,7 +88,7 @@ angular.module('starter.controllers', [])
     $scope.Empresa = Empresa.info();
 })
 
-.controller('ChatsCtrl', function($scope, $rootScope, Chats) {
+.controller('ChatsCtrl', function($scope, $rootScope, Chats, $interval) {
  
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -108,8 +96,12 @@ angular.module('starter.controllers', [])
   // listen for the $ionicView.enter event:
   //
   $scope.$on('$ionicView.enter', function(e) {
-    alert($rootScope.test)
-    $scope.chats = Chats.all();
+    $scope.Totalchats = Chats.allCount();
+    $interval(function(){
+      alert('atualizar');
+      $scope.chats = Chats.all();
+    },5000);
+   
   });
 })
 

@@ -28,7 +28,6 @@ angular.module('starter.services', [])
   var chats = [];
   // Might use a resource here that returns a JSON array
   if(SMS) SMS.listSMS({}, function(data){
-
     alert(data.length+' sms listed as json array');
     alert( JSON.stringify(data) );
     var smsList = [];

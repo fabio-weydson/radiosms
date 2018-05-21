@@ -1,10 +1,10 @@
-<ion-view view-title="Mensagens (30)">
+<ion-view view-title="Mensagens ({{Totalchats}})">
   <ion-content>
     <ion-list>
       <ion-item class=" item-icon-left item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" >
         <i class="icon ion-ios-email"></i>
-        <h2>{{chat.service_center}}</h2>
-        <p>{{chat.body}}</p>
+        <h2>{{chat.address}}</h2>
+        <p> {{chat.service_center}} {{chat.body}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
 <!--href="#/tab/chats/{{chat.id}}"

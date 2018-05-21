@@ -8,12 +8,12 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngSanitize'])
 
 .run(function($ionicPlatform,$rootScope) {
- 
+  $rootScope.SMSList  = [];
+  $rootScope.firstRun = localStorage.getItem('FirstRun');
+  $rootScope.Empresa = JSON.parse(localStorage.getItem("empresa"));
   $ionicPlatform.ready(function() {
-    $rootScope.test = new Date();
     
     document.addEventListener('deviceready', initApp, false);
-   
     
     cordova.plugins.backgroundMode.setDefaults({  title:  'Em modo background', ticker: 'Entrando em segundo plano',  text:'Clique para abrir o aplicativo.'});
     cordova.plugins.backgroundMode.enable();
@@ -44,19 +44,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
            }
        }
 
-      document.addEventListener('onSMSArrive', function(e) {
-        var logado = JSON.parse(localStorage.getItem("empresa"));
-        alert('onSMSArrive()');
-        var IncomingSMS = e.data;
-        alert('sms.address:' + IncomingSMS.address);
-        alert('sms.body:' + IncomingSMS.body);
-        /* Debug received SMS content (JSON) */
-        alert(JSON.stringify(IncomingSMS));
-        if(logado.EMP_CodigoEmpresa) {
-          alert("Logado! Fazer o envio");
-        }
+       if(SMS) SMS.startWatch(function(){
+        alert('watching');
+        document.addEventListener('onSMSArrive', function(e) {
+          var IncomingSMS = e.data;
+          alert('NOVO:'+IncomingSMS.body);
+          // $rootScope.SMSList.push({
+          //   'address' : IncomingSMS.address,
+          //   'body': IncomingSMS.body
+          // })
+          // if($rootScope.Empresa.EMP_CodigoEmpresa) {
+          //   alert("Logado! Fazer o envio");
+          // }
+        });
+      }, function(){
+        alert('failed to start watching');
       });
-       // we will restore the intercepted SMS here, for later restore
+
    
       function BackgroundMode(e){
           e.preventDefault();
@@ -151,6 +155,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/welcome');
+  var FirstRun = JSON.parse(localStorage.getItem("FirstRun"));
+  console.log(FirstRun);
+  var Logado = JSON.parse(localStorage.getItem("empresa"));
+  
+  if(FirstRun!=false){
+    $urlRouterProvider.otherwise('/welcome');
+  } else {
+    if(Logado) {
+      $urlRouterProvider.otherwise('/tab/dash');
+    } else {
+      $urlRouterProvider.otherwise('/auth');
+    }
+  }
 
 });
