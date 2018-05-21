@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('DashCtrl', function($scope, Empresa, SMSservice, $interval) {
+.controller('DashCtrl', function($scope, Empresa) {
     $scope.Empresa = Empresa.info();
 })
 

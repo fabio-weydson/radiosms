@@ -1,12 +1,5 @@
 angular.module('starter.services', [])
 .factory('SMSservice', ['$interval', function($interval){
-
-  if(SMS) SMS.startWatch(function(){
-    alert('watching started');
-  }, function(){
-    alert('failed to start watching');
-  });
-
   return {
     check: function(){
         return 'sadsadads';
@@ -65,6 +58,9 @@ angular.module('starter.services', [])
   return {
     all: function() {
       return chats;
+    },
+    allCount: function() {
+      return chats.length;
     },
     remove: function(chat) {
       chats.splice(chats.indexOf(chat), 1);
