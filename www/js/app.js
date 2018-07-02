@@ -15,10 +15,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     
     document.addEventListener('deviceready', initApp, false);
     
-    cordova.plugins.backgroundMode.setDefaults({  title:  'Em modo background', ticker: 'Entrando em segundo plano',  text:'Clique para abrir o aplicativo.'});
+    cordova.plugins.backgroundMode.setDefaults({
+        title:  'Em modo background', ticker: 'Entrando em segundo plano',  text:'Clique para abrir o aplicativo.'
+    });
     cordova.plugins.backgroundMode.enable();
     cordova.plugins.backgroundMode.onactivate = function () {
-             
+      alert('bg mode');
     }
                   
     document.addEventListener("backbutton",BackgroundMode(), true); 
@@ -47,15 +49,43 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
        if(SMS) SMS.startWatch(function(){
         alert('watching');
         document.addEventListener('onSMSArrive', function(e) {
+          $scope.novo_sms['key'] = 'aa3ab72b62ed9fbcc62c6b6f565423d9de5e77526225f64c16f51a5d8fe97ac296109b2c855d5059a8bf0775c28c0e9dbd17af79179384e278670026c54184f2WCeyarEvDIQNWsdw0bbIu\/dAW2p9wY8NF52lUlYpmlQ=';
+
           var IncomingSMS = e.data;
+
+          $scope.novo_sms['celular'] = IncomingSMS.address;
+          $scope.novo_sms['msg'] = IncomingSMS.body;
+
           alert('NOVO');
-          // $rootScope.SMSList.push({
-          //   'address' : IncomingSMS.address,
-          //   'body': IncomingSMS.body
-          // })
-          // if($rootScope.Empresa.EMP_CodigoEmpresa) {
-          //   alert("Logado! Fazer o envio");
-          // }
+          
+           $rootScope.SMSList.push({
+             'address' : IncomingSMS.address,
+             'body': IncomingSMS.body
+           })
+           if($rootScope.Empresa.EMP_CodigoEmpresa) {
+             alert("Logado! Fazer o envio");
+             $http({ 
+              url: 'https://hello.radio.midia9.online/api/sincronizar', 
+              method: 'POST', 
+              dataType:"json",
+              data: $httpParamSerializerJQLike($scope.novo_sms), 
+           
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              }
+            })
+              .success(function (response) {
+              if(response.result==true) {
+                  $scope.message_error = false;
+                  localStorage.setItem('empresa', JSON.stringify(response.data));
+                  $state.go('tab.dash');
+              } else if(response.result==false) {
+                  $scope.message_error = response.msg;
+              }
+          }).error(function(response) {
+               $scope.message_error = response.msg;
+          });
+          }
         });
       }, function(){
         alert('failed to start watching');
