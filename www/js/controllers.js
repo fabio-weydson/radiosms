@@ -98,11 +98,11 @@ angular.module('starter.controllers', [])
   $scope.$on('$ionicView.enter', function(e) {
     $scope.Totalchats = Chats.allCount();
     $scope.chats = Chats.refresh();
+    $scope.chats = Chats.all();
+
     $interval(function(){
       alert('atualizar');
-      $scope.chats = Chats.refresh();
-      $scope.chats = Chats.all();
-    },10000);
+    },30000);
    
   });
 })

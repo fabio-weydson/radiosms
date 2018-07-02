@@ -48,7 +48,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         alert('watching');
         document.addEventListener('onSMSArrive', function(e) {
           var IncomingSMS = e.data;
-          alert('NOVO:'+IncomingSMS.body);
+          alert('NOVO');
           // $rootScope.SMSList.push({
           //   'address' : IncomingSMS.address,
           //   'body': IncomingSMS.body
